@@ -1,4 +1,5 @@
-#organizer-toggle-btn {
+/* --- Main Toolbar Buttons --- */
+#organizer-toggle-btn, #organizer-expand-all, #organizer-collapse-all {
     background-color: #1a73e8;
     color: white;
     padding: 8px 16px;
@@ -6,11 +7,16 @@
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    margin-left: 20px;
+    margin-left: 12px;
+}
+
+#organizer-expand-all, #organizer-collapse-all {
+    background-color: #5f6368; /* Grey for secondary actions */
+    padding: 8px 12px;
 }
 
 #organizer-group-btn {
-    background-color: #1e8e3e;
+    background-color: #1e8e3e; /* Green */
     color: white;
     padding: 8px 16px;
     border: none;
@@ -18,26 +24,14 @@
     cursor: pointer;
     font-weight: bold;
     margin-left: 10px;
-    display: none;
+    display: none; /* Hidden by default */
 }
 
-/* Style for when a chat is selected */
-ms-chat-turn.organizer-selected {
-    border: 2px solid #1a73e8 !important;
-    border-radius: 8px;
-    box-sizing: border-box; /* Ensures border is included in element size */
-}
-
-/* The main container for a group */
-.organizer-group-wrapper {
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    margin: 16px 0 !important;
-    overflow: hidden;
-}
-
-/* The clickable header of the group */
+/* --- Group Header and Action Buttons --- */
 .organizer-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #f1f3f4;
     padding: 12px;
     font-size: 1.1em;
@@ -45,20 +39,54 @@ ms-chat-turn.organizer-selected {
     cursor: pointer;
     user-select: none;
     border-bottom: 1px solid #dadce0;
-    display: flex;
-    align-items: center;
 }
 .organizer-group-header:hover {
     background-color: #e8eaed;
 }
 
-/* --- NEW STYLES FOR ARROW AND TITLE --- */
-.organizer-arrow {
-    margin-right: 8px;
-    width: 15px; /* Gives the arrow its own space */
-    display: inline-block;
+.organizer-group-name {
+    flex-grow: 1; /* Allows the name to take up available space */
 }
 
-.organizer-title {
-    display: inline-block;
+.organizer-group-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 16px;
+}
+
+.organizer-group-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.organizer-group-btn:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.organizer-group-btn .material-symbols-outlined {
+    font-size: 20px;
+    color: #5f6368;
+}
+
+.organizer-group-btn.delete-btn .material-symbols-outlined {
+    color: #d93025; /* Red for delete */
+}
+
+/* --- Other Styles --- */
+.conversation-turn.organizer-selected {
+    border: 2px solid #1a73e8 !important;
+    border-radius: 8px;
+}
+
+.organizer-group-wrapper {
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    margin: 16px 0 !important;
+    overflow: hidden;
 }
