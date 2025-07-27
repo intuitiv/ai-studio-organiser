@@ -1,0 +1,64 @@
+#organizer-toggle-btn {
+    background-color: #1a73e8;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+#organizer-group-btn {
+    background-color: #1e8e3e;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    display: none;
+}
+
+/* Style for when a chat is selected */
+ms-chat-turn.organizer-selected {
+    border: 2px solid #1a73e8 !important;
+    border-radius: 8px;
+    box-sizing: border-box; /* Ensures border is included in element size */
+}
+
+/* The main container for a group */
+.organizer-group-wrapper {
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    margin: 16px 0 !important;
+    overflow: hidden;
+}
+
+/* The clickable header of the group */
+.organizer-group-header {
+    background-color: #f1f3f4;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #dadce0;
+    display: flex;
+    align-items: center;
+}
+.organizer-group-header:hover {
+    background-color: #e8eaed;
+}
+
+/* --- NEW STYLES FOR ARROW AND TITLE --- */
+.organizer-arrow {
+    margin-right: 8px;
+    width: 15px; /* Gives the arrow its own space */
+    display: inline-block;
+}
+
+.organizer-title {
+    display: inline-block;
+}
