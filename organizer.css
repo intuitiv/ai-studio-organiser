@@ -45,13 +45,19 @@
 }
 
 .organizer-group-name {
-    flex-grow: 1; /* Allows the name to take up available space */
+    flex-grow: 1;
 }
 
 .organizer-group-actions {
     display: flex;
     gap: 8px;
     margin-left: 16px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.organizer-group-header:hover .organizer-group-actions {
+    opacity: 1;
 }
 
 .organizer-group-btn {
@@ -78,10 +84,11 @@
     color: #d93025; /* Red for delete */
 }
 
-/* --- Other Styles --- */
-.conversation-turn.organizer-selected {
+/* --- Style for a selected chat in "Organize" mode --- */
+ms-chat-turn.organizer-selected .chat-turn-container {
     border: 2px solid #1a73e8 !important;
     border-radius: 8px;
+    background-color: rgba(26, 115, 232, 0.1);
 }
 
 .organizer-group-wrapper {
