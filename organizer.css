@@ -1,99 +1,95 @@
-/* --- Main Toolbar Buttons --- */
-#organizer-toggle-btn, #organizer-expand-all, #organizer-collapse-all {
-    background-color: #1a73e8;
-    color: white;
+/* --- FINAL POLISHED THEME --- */
+
+/* This uses AI Studio's own color variables to match the theme */
+:root {
+    --organizer-header-bg: #e8f0fe; /* Light blue for Light Mode */
+    --organizer-header-text: #174ea6;
+    --organizer-header-hover: #d2e3fc;
+    --organizer-content-bg: #ffffff;
+    --organizer-border-color: #dadce0;
+    --organizer-button-text: #1a73e8;
+    --organizer-icon-color: #5f6368;
+    --organizer-icon-hover-bg: rgba(0, 0, 0, 0.1);
+    --organizer-delete-icon: #d93025;
+    --organizer-highlight-bg: rgba(26, 115, 232, 0.1);
+    --organizer-highlight-border: #1a73e8;
+}
+
+/* This block automatically activates when the <body> has the 'dark-theme' class */
+body.dark-theme {
+    --organizer-header-bg: #28354f; /* Darker blue for Dark Mode */
+    --organizer-header-text: #d2e3fc;
+    --organizer-header-hover: #323e5a;
+    --organizer-content-bg: #1e1f20;
+    --organizer-border-color: #5f6368;
+    --organizer-button-text: #8ab4f8;
+    --organizer-icon-color: #bdc1c6;
+    --organizer-icon-hover-bg: rgba(255, 255, 255, 0.1);
+    --organizer-delete-icon: #f28b82;
+    --organizer-highlight-bg: rgba(138, 180, 248, 0.15);
+    --organizer-highlight-border: #8ab4f8;
+}
+
+/* --- Main Toolbar Buttons (Theme Aware & Polished) --- */
+#organizer-organize, #organizer-expand-all, #organizer-collapse-all,
+#organizer-group-chats {
+    background-color: transparent;
+    color: var(--organizer-button-text);
     padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
+    border: 1px solid var(--organizer-border-color);
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 500;
     margin-left: 12px;
+    transition: background-color 0.2s;
 }
-
-#organizer-expand-all, #organizer-collapse-all {
-    background-color: #5f6368; /* Grey for secondary actions */
-    padding: 8px 12px;
+#organizer-organize:hover, #organizer-expand-all:hover, #organizer-collapse-all:hover {
+    background-color: var(--organizer-header-bg);
 }
+#organizer-group-chats { display: none; }
 
-#organizer-group-btn {
-    background-color: #1e8e3e; /* Green */
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-left: 10px;
-    display: none; /* Hidden by default */
-}
-
-/* --- Group Header and Action Buttons --- */
+/* --- Colorful Group Header (Theme Aware) --- */
 .organizer-group-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f1f3f4;
-    padding: 12px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    border-bottom: 1px solid #dadce0;
+    display: flex; justify-content: space-between; align-items: center;
+    background-color: var(--organizer-header-bg);
+    color: var(--organizer-header-text);
+    padding: 12px 16px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer; user-select: none;
+    border-bottom: 1px solid var(--organizer-border-color);
+    transition: background-color 0.2s;
 }
-.organizer-group-header:hover {
-    background-color: #e8eaed;
-}
-
-.organizer-group-name {
-    flex-grow: 1;
-}
-
+.organizer-group-header:hover { background-color: var(--organizer-header-hover); }
+.organizer-group-name { flex-grow: 1; }
 .organizer-group-actions {
-    display: flex;
-    gap: 8px;
-    margin-left: 16px;
-    opacity: 0;
+    display: flex; gap: 8px; margin-left: 16px; opacity: 0;
     transition: opacity 0.2s ease-in-out;
 }
-
-.organizer-group-header:hover .organizer-group-actions {
-    opacity: 1;
-}
+.organizer-group-header:hover .organizer-group-actions { opacity: 1; }
 
 .organizer-group-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none; background: none; cursor: pointer; padding: 4px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s;
 }
+.organizer-group-btn:hover { background-color: var(--organizer-icon-hover-bg); }
+.organizer-group-btn .material-symbols-outlined { font-size: 20px; color: var(--organizer-icon-color); }
+.organizer-group-btn.delete-btn .material-symbols-outlined { color: var(--organizer-delete-icon); }
 
-.organizer-group-btn:hover {
-    background-color: rgba(0,0,0,0.1);
-}
-
-.organizer-group-btn .material-symbols-outlined {
-    font-size: 20px;
-    color: #5f6368;
-}
-
-.organizer-group-btn.delete-btn .material-symbols-outlined {
-    color: #d93025; /* Red for delete */
-}
-
-/* --- Style for a selected chat in "Organize" mode --- */
+/* --- Selection Highlight (Theme Aware) --- */
 ms-chat-turn.organizer-selected .chat-turn-container {
-    border: 2px solid #1a73e8 !important;
+    border: 2px solid var(--organizer-highlight-border) !important;
     border-radius: 8px;
-    background-color: rgba(26, 115, 232, 0.1);
+    background-color: var(--organizer-highlight-bg);
 }
 
+/* --- Group Wrapper & Content (Theme Aware) --- */
 .organizer-group-wrapper {
-    border: 1px solid #dadce0;
-    border-radius: 8px;
+    border: 1px solid var(--organizer-border-color);
+    border-radius: 12px;
     margin: 16px 0 !important;
     overflow: hidden;
+    background-color: var(--organizer-content-bg);
 }
+.organizer-group-content { padding: 8px; }

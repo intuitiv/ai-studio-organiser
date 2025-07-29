@@ -3,20 +3,30 @@
   "name": "AI Studio Organizer",
   "version": "1.1",
   "description": "Adds functionality to group, label, and minimize conversations in Google AI Studio.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [
     "storage"
+  ],
+  "host_permissions": [
+    "https://aistudio.google.com/*"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://aistudio.google.com/*"
       ],
-      "js": [
-        "organizer.js"
-      ],
-      "css": [
-        "organizer.css"
-      ]
+      "js": ["organizer.js"],
+      "css": ["organizer.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["https://fonts.googleapis.com/*"],
+      "matches": ["https://aistudio.google.com/*"]
     }
   ]
 }
