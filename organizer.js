@@ -43,7 +43,8 @@ function injectUI(targetToolbar) {
     document.head.appendChild(link);
     const buttons = {
         'Organize': toggleGroupMode, 'Group Chats': createGroup,
-        'Expand All': expandAllGroups, 'Collapse All': collapseAllGroups
+        'Expand All': expandAllGroups, 'Collapse All': collapseAllGroups,
+        'Reset Organization': handleResetOrganization
     };
     Object.entries(buttons).forEach(([text, action]) => {
         const btn = document.createElement('button');
@@ -240,7 +241,28 @@ function handleDeleteGroup(wrapper) {
     }
 }
 
-// All other functions are included for completeness
+function handleResetOrganization() {
+    const promptId = getPromptId();
+    if (!promptId) {
+        alert("This feature only works on a saved prompt.");
+        return;
+    }
+
+    if (confirm("Are you sure you want to reset all organization for this prompt? All groups will be removed and chats will return to a flat list. This cannot be undone.")) {
+        chrome.storage.local.get('organizerData', (result) => {
+            const allData = result.organizerData || {};
+            // Delete the data for the current prompt
+            delete allData[promptId];
+            chrome.storage.local.set({ organizerData: allData }, () => {
+                console.log(`[Organizer] Organization data cleared for Prompt ID: ${promptId}`);
+                alert("Organization has been reset. Reloading the page to apply changes.");
+                // Hard reload to get a clean slate
+                window.location.reload();
+            });
+        });
+    }
+}
+
 function saveGroups() {
     const promptId = getPromptId();
     if (!promptId) return;
