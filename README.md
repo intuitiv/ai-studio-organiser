@@ -44,6 +44,16 @@ The "AI Studio Organizer" extension will now appear in your list and is ready to
 5.  **Name It:** Enter a name in the pop-up and click "OK". Your group is now created, minimized, and saved.
 6.  **Manage:** Hover over the group header to see options for Downloading, Renaming, Un-organizing, or Deleting the group from your view.
 
+## Upcoming Features (Future Roadmap)
+
+This extension is actively being developed. The grouping architecture we've built is a foundation for even more powerful AI-assisted features. Here is a glimpse of what's planned for the future:
+
+-   **AI-Powered Summarization:** Right-click a group and select "Summarize with AI" to get a concise summary of that entire line of investigation.
+-   **Conversation Optimization:** An intelligent tool to detect repetitive or redundant text within a group and offer to automatically "condense" it, saving tokens and improving clarity.
+-   **Export to Markdown:** In addition to `.txt`, an option to download a group formatted as a clean Markdown file, preserving code blocks and formatting.
+
+Have an idea for a feature? Feel free to suggest it in the "Issues" tab!
+
 ## Contributing
 
 Contributions are welcome! The most common point of failure is when Google updates the AI Studio website, which can break the CSS selectors.
