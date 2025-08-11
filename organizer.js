@@ -3,6 +3,7 @@
 const TOOLBAR_SELECTOR = 'ms-toolbar';
 const CHAT_TURN_SELECTOR = 'ms-chat-turn';
 const CHAT_CONTAINER_SELECTOR = 'ms-chat-session ms-autoscroll-container > div';
+const SAVE_BUTTON_SELECTOR = 'button[aria-label="Save prompt"]';
 
 let isGroupModeActive = false;
 let selectedChats = [];
@@ -37,6 +38,7 @@ waitForElement(TOOLBAR_SELECTOR, injectUI);
 
 function injectUI(targetToolbar) {
     if (!targetToolbar || document.getElementById('organizer-organize')) return;
+    document.addEventListener('keydown', handleKeyPress);
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200';
@@ -57,6 +59,26 @@ function injectUI(targetToolbar) {
     });
     observeChatContainerAndLoadGroups();
 }
+
+function handleKeyPress(event) {
+    // Check for Ctrl+S on Windows/Linux or Cmd+S on Mac
+    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+        // Prevent the browser's default "Save As" dialog
+        event.preventDefault();
+
+        console.log('[Organizer] Ctrl+S detected. Attempting to click the Save button.');
+
+        // Find the native AI Studio Save button
+        const saveButton = document.querySelector(SAVE_BUTTON_SELECTOR);
+
+        if (saveButton && !saveButton.disabled) {
+            saveButton.click();
+        } else {
+            console.warn('[Organizer] Could not find or click the Save button. It might be disabled or the selector may have changed.');
+        }
+    }
+}
+
 
 function observeChatContainerAndLoadGroups() {
     const promptId = getPromptId();
