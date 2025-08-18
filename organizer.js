@@ -4,12 +4,61 @@ const TOOLBAR_SELECTOR = 'ms-toolbar';
 const CHAT_TURN_SELECTOR = 'ms-chat-turn';
 const CHAT_CONTAINER_SELECTOR = 'ms-chat-session ms-autoscroll-container > div';
 const SAVE_BUTTON_SELECTOR = 'button[aria-label="Save prompt"]';
+const AUTO_SAVE_INTERVAL = 5000;
 
 let isGroupModeActive = false;
 let selectedChats = [];
 let loadGroupsDebounceTimer;
 let lastClickedChat = null;
 let selectionAnchorIndex = null;
+let autoSaveTimerId = null;
+
+function performAutoSave() {
+    const saveButton = document.querySelector(SAVE_BUTTON_SELECTOR);
+    if (saveButton && !saveButton.disabled) {
+        console.log('[Organizer] Auto-saving changes...');
+        saveButton.click();
+    } else {
+        console.log('[Organizer] Auto-save skipped: No changes detected.');
+    }
+}
+
+function startAutoSave() {
+    if (autoSaveTimerId) return; // Already running
+    autoSaveTimerId = setInterval(performAutoSave, AUTO_SAVE_INTERVAL);
+    const toggleBtn = document.getElementById('organizer-autosave-toggle');
+    toggleBtn.textContent = 'Auto-Save: ON';
+    toggleBtn.classList.add('autosave-active');
+    console.log('[Organizer] Auto-save started.');
+}
+
+function stopAutoSave() {
+    clearInterval(autoSaveTimerId);
+    autoSaveTimerId = null;
+    const toggleBtn = document.getElementById('organizer-autosave-toggle');
+    toggleBtn.textContent = 'Auto-Save: OFF';
+    toggleBtn.classList.remove('autosave-active');
+    console.log('[Organizer] Auto-save stopped.');
+}
+
+function toggleAutoSave() {
+    const isCurrentlyActive = !!autoSaveTimerId;
+    if (isCurrentlyActive) {
+        stopAutoSave();
+        chrome.storage.local.set({ organizerAutoSaveState: false });
+    } else {
+        startAutoSave();
+        chrome.storage.local.set({ organizerAutoSaveState: true });
+    }
+}
+
+function initializeAutoSave() {
+    chrome.storage.local.get('organizerAutoSaveState', (result) => {
+        if (result.organizerAutoSaveState) {
+            startAutoSave();
+        }
+    });
+}
 
 function waitForElement(selector, callback) {
     const max_tries = 20;
@@ -57,6 +106,15 @@ function injectUI(targetToolbar) {
         btn.onclick = action;
         targetToolbar.appendChild(btn);
     });
+
+    const autoSaveToggle = document.createElement('button');
+    autoSaveToggle.id = 'organizer-autosave-toggle';
+    autoSaveToggle.textContent = 'Auto-Save: OFF';
+    autoSaveToggle.onclick = toggleAutoSave;
+    targetToolbar.appendChild(autoSaveToggle);
+
+    document.addEventListener('keydown', handleKeyPress);
+    initializeAutoSave();
     observeChatContainerAndLoadGroups();
 }
 
