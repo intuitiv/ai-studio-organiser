@@ -5,6 +5,7 @@ const CHAT_TURN_SELECTOR = 'ms-chat-turn';
 const CHAT_CONTAINER_SELECTOR = 'ms-chat-session ms-autoscroll-container > div';
 const SAVE_BUTTON_SELECTOR = 'button[aria-label="Save prompt"]';
 const AUTO_SAVE_INTERVAL = 5000;
+const CHAT_TITLE_SELECTOR = '.page-title h1';
 
 let isGroupModeActive = false;
 let selectedChats = [];
@@ -116,6 +117,26 @@ function injectUI(targetToolbar) {
     document.addEventListener('keydown', handleKeyPress);
     initializeAutoSave();
     observeChatContainerAndLoadGroups();
+    observeChatTitle();
+}
+
+function updateTabTitle() {
+    const titleElement = document.querySelector(CHAT_TITLE_SELECTOR);
+    const chatTitle = titleElement ? titleElement.textContent.trim() : "Chat Prompt";
+    if (document.title !== `${chatTitle} | AI Studio`) {
+        document.title = `${chatTitle} | AI Studio`;
+        console.log(`[Organizer] Tab title updated to: ${document.title}`);
+    }
+}
+
+function observeChatTitle() {
+    waitForElement(CHAT_TITLE_SELECTOR, (titleElement) => {
+        updateTabTitle();
+        const observer = new MutationObserver(() => {
+            updateTabTitle();
+        });
+        observer.observe(titleElement, { childList: true, subtree: true, characterData: true });
+    });
 }
 
 function handleKeyPress(event) {
